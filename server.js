@@ -51,7 +51,10 @@ app.post("/api/user/login", async (req, res) => {
       _id: user._id,
       userName: user.userName
     };
-    const token = jwt.sign(payload, process.env.JWT_SECRET);
+    
+    // Set expiration for the token (1 hour)
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });  // Token expires in 1 hour
+    
     res.json({ message: "Login successful", token });
   } catch (msg) {
     res.status(422).json({ message: msg });
